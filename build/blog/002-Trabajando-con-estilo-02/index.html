@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link rel="stylesheet" href="/assets/main.css"><link rel="stylesheet" href="/assets/hljs__solarized-dark.css"><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;1,500&amp;family=Zilla+Slab:wght@300;600;700&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><!--script(src="/assets/prism.js" async)--><style>code[class*="language-"],
+pre[class*="language-"] {
+    word-wrap: normal !important;
+}
+</style><title>here will come the page title</title></head><body class="dark"><div class="static" id="nav"><header class="page"><div class="nav-logo"><a class="nav-logo-wrapper" href="/" title="Agus Quintanilla"><svg width="100%" viewBox="0 0 56.045 38.154"><defs><linearGradient id="linear-gradient" x1="0.5" y1="0.366" x2="0.5" y2="0.895" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#dee6f7"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><g transform="translate(0 142.929)"><path id="logo-path" d="M23.657-115.937,19.95-129.642h-.991L5.921-104.817H0l.467-4.934H3.48l14.255-27.341h-5.81l.519-4.934H22.831l9.287,32.318H37.47l1.326,4.934H26.675l-1.986-7.342H12.469l1.648-3.82Zm14.647-.03,0-.006,5.788.008,3.96,10.944H41.824l-2.3-7.139-5.407.005-1.1-3.805Zm-11.979-21.76a17.288,17.288,0,0,1,12.379-5.2,17.349,17.349,0,0,1,17.341,17.341,17.327,17.327,0,0,1-7.493,14.272l-1.743-4.928a12.624,12.624,0,0,0,4.43-9.576,12.574,12.574,0,0,0-12.634-12.5,12.661,12.661,0,0,0-10.588,5.682Z" fill="url(#linear-gradient)"></path></g></svg></a></div><div class="show-small hide-medium" onclick="nav_toggleMenu()"><svg class="menu-icon header-icon" width="36" viewBox="0 0 28 22"><use xlink:href="/assets/icons.svg#menu-icon"></use></svg></div><!--nav.nav-menu.hide-small.show-large--><nav class="nav-menu"><ul><li class="nav-menu-item"><a class="main-menu-link" href="/blog">Blog</a></li><li class="nav-menu-item"><a class="main-menu-link">Projects</a></li><li class="nav-menu-item"><a class="main-menu-link">Contact</a></li><li class="nav-menu-item hide-medium"><a class="main-menu-link">Spanish version</a></li><li class="nav-lang hide-small show-medium"><a><div class="text">ES</div><svg class="header-icon" width="36px" height="36px" viewBox="0 0 40.567 40.359"><use xlink:href="/assets/icons.svg#lang-icon"></use></svg></a></li></ul></nav></header></div><main class="page" id="post"><section class="md-wrapper"><h1>En verdad son bastante parecidos</h1>
+<p>En esencia, el trabajo con css-in-js no difiere mucho de como se trabaja con SASS, así que vamos a ver algunos ejemplos usando la librería de styled-components en un entorno de aplicación create-react-app</p>
+<p><strong>NOTA:</strong> el propósito de este artículo es ofrecer un acercamiento al css-in-js, analizando las semejanzas de style-components respecto a SASS y las prácticas empleadas no son necesariamente las más recomendadas</p>
+<h2>Instalación</h2>
+<p>Es muy similar en ambos casos y tan solo tendremos que cargar una librería a través de <code>npm</code></p>
+<p>En el caso de SASS vamos a instalar el paquete <code>node-sass</code> como dependencia de desarrollo, ya que esta tecnología hace un compilado previo del código, transformándolo en CSS antes de ser distribuido y por lo tanto solo va a ser necesaria durante el desarrollo</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> npm install --save-dev node-sass</span>
+</code></pre>
+<p>En el caso de uso habitual de los styled-components, los estilos codificados dentro de archivos js se van a procesar en tiempo de ejecución, por lo que su instalación será diferente</p>
+<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> npm install --save styled-components</span>
+</code></pre>
+<p>Si bien esta técnica añade un peso extra al proyecto por tener que adjuntar la librería (~16kb), nos va a ahorrar el peso correspondiente a los prefijos de compatibilidad entre navegadores y se va a encargar además de eliminar automáticamente todo el código muerto (reglas no utilizadas)</p>
+<p>También es posible <a href="https://styled-components.com/docs/tooling">utilizar styled-components como herramienta de preproceso</a> principalmente para el uso de React desde el servidor</p>
+<h2>Anidamiento y pseudo clases</h2>
+<p>Cuando comenzé a usar SASS las dos cosas que más me llamaron la atención fueron la posibilidad de crear variables (de las que css no disponía por entonces) y la facilidad para declarar selectores através del anidamiento</p>
+<pre><code class="language-scss"><span class="hljs-comment">// file: sass-button.scss</span>
+
+<span class="hljs-variable">$color-primary</span>: <span class="hljs-number">#0010ff</span>;
+<span class="hljs-variable">$button-padding</span>: <span class="hljs-number">1em</span> <span class="hljs-number">2em</span>;
+
+<span class="hljs-selector-class">.sass-button</span> {
+  <span class="hljs-comment">// base rules</span>
+  <span class="hljs-attribute">background</span>: white;
+  <span class="hljs-attribute">color</span>: black;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.2rem</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-variable">$button-padding</span>;
+  
+  <span class="hljs-comment">// variants</span>
+  &amp;--primary {
+    <span class="hljs-attribute">background</span>: <span class="hljs-variable">$color-primary</span>;
+    <span class="hljs-attribute">color</span>: white;
+  }
+  
+  &amp;--large {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.6rem</span>;
+  }
+}
+</code></pre>
+<p>styled-components se escribe de forma similar, la diferencia principal radica en que este nos va a devolver un componente de html con el estilo ya aplicado, vamos a verlo</p>
+<pre><code class="language-jsx"><span class="hljs-comment">// file: StcButton.js</span>
+
+<span class="hljs-comment">// We&#x27;re in the js land, so we need to import the lib</span>
+<span class="hljs-keyword">import</span> styled <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;styled-components&#x27;</span>
+
+<span class="hljs-keyword">const</span> colorPrimary = <span class="hljs-string">&#x27;#0010ff&#x27;</span>
+<span class="hljs-keyword">const</span> padding = <span class="hljs-string">&#x27;1em 2em&#x27;</span>
+
+<span class="hljs-comment">// It returns a react component based on a button tag</span>
+<span class="hljs-keyword">const</span> StcButton = styled.button<span class="hljs-string">`
+  /* base rules */
+  background: white;
+  color: black;
+  font-size: 1.2rem;
+  padding: <span class="hljs-subst">${padding}</span>;
+  
+  /* variants using clases (there&#x27;s a better way to do it) */
+  &amp;--primary {
+    background: <span class="hljs-subst">${colorPrimary}</span>;
+    color: white;
+  }
+  
+  &amp;--large {
+    font-size: 1.6rem;
+  }
+`</span>
+
+<span class="hljs-comment">/* Export it to use in another file */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> StcButton;
+</code></pre>
+<p>Ahora vamos a ver como usar ambos enfoques dentro de un componente React</p>
+<pre><code class="language-jsx"><span class="hljs-comment">// file: Page.js</span>
+
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>
+<span class="hljs-keyword">import</span> StcButton <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./StcButton&#x27;</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./sass-button&#x27;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Page</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+  	<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {/* using the css button */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button button--primary&quot;</span>&gt;</span>css button<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      {/* using the styled button and apply the class variant */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">StcButton</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button--primary&quot;</span>&gt;</span>styled button<span class="hljs-tag">&lt;/<span class="hljs-name">StcButton</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  )
+}
+</code></pre>
+<p>En los dos casos obtenemos el mismo resultado, un tag <code>button</code> con los estilos personalizados que hemos definido anteriormente, pero hay una diferencia, en el caso del styled-component el nombre de la clase ha cambiado</p>
+<p>// IMAGEN DEL INSPECTOR DE ELEMENTOS DEL NAVEGADOR MOSTRANDO EL STYLED COMPONENTS</p>
+<p>styled-components va a generar un nombre único para cada clase css, aislando estas reglas del entorno global, asegurándonos así de que no se va a filtrar por descuido en otros elementos html, esto suena bien ¿verdad? piensa qué pasaría si en el proyecto en que estamos trabajando queremos implementar un módulo de otro desarrollador que también tiene una clase <code>.button</code> tal y como hemos definido nosotros</p>
+<p><strong>Pero en este caso StcButton también está usando clases para las variantes</strong></p>
+<p>El uso de clases para manejar las variantes no es lo más recomendado con styled-components y existen otras maneras de facilitar la personalización</p>
+<pre><code class="language-jsx"><span class="hljs-keyword">import</span> styled, {css} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;styled-components&#x27;</span>
+
+<span class="hljs-comment">/* defining variables */</span>
+
+<span class="hljs-keyword">const</span> primary = css`<span class="css">
+  <span class="hljs-selector-tag">background</span>: </span><span class="hljs-subst">${colorPrimary}</span><span class="css">;
+  <span class="hljs-selector-tag">color</span>: <span class="hljs-selector-tag">white</span>;
+`</span>
+
+<span class="hljs-keyword">const</span> StcButton = styled.button<span class="hljs-string">`
+  /* base rules*/
+  background: white;
+  color: black;
+  font-size: 1.2rem;
+  padding: $button-padding;
+
+  /* if primary prop is declared, it uses the primary rules */
+  <span class="hljs-subst">${props =&gt; props.primary &amp;&amp; primary}</span>
+`</span>
+  
+<span class="hljs-comment">// extending a base component (although this isn&#x27;t the most flexible case here)</span>
+<span class="hljs-keyword">const</span> StcButtonLarge = styled(StcButton)<span class="hljs-string">`
+  background: $color-primary;
+  color: white;
+`</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponent</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+  	<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    	<span class="hljs-tag">&lt;<span class="hljs-name">StcButton</span>&gt;</span>Base button<span class="hljs-tag">&lt;/<span class="hljs-name">StcButton</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">StcButton</span> <span class="hljs-attr">primary</span>&gt;</span>Primary button<span class="hljs-tag">&lt;/<span class="hljs-name">StcButton</span>&gt;</span>
+      {/* the right way here would be to add `large` as a prop too */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">StcButtonLarge</span> <span class="hljs-attr">primary</span>&gt;</span>Large primary button<span class="hljs-tag">&lt;/<span class="hljs-name">StcButton</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  )
+}
+</code></pre>
+<h2>Variables y listas</h2>
+<p>SASS tiene su propio lenguaje para generar variables y listas, en el caso de styled-components, estamos trabajando dentro de un contexto de <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/template_strings">template literals</a>, que permite escribir expresiones y podemos usar todo el arsenal que ofrece JS como son los arrays, objetos, mapas ...</p>
+<pre><code class="language-jsx"><span class="hljs-keyword">const</span> maxWidth = <span class="hljs-number">810</span>
+<span class="hljs-keyword">const</span> colors = {
+  <span class="hljs-attr">blue</span>: <span class="hljs-string">&#x27;#287cc2&#x27;</span>,
+  <span class="hljs-attr">wine</span>: <span class="hljs-string">&#x27;#d22141&#x27;</span>
+}
+
+<span class="hljs-comment">// you are free to use any mathematical manipulation</span>
+<span class="hljs-keyword">const</span> multiplier = <span class="hljs-number">1.2</span> 
+<span class="hljs-keyword">const</span> spaces = [<span class="hljs-number">0</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>].map(<span class="hljs-function"><span class="hljs-params">val</span> =&gt;</span> val * multiplier)
+
+<span class="hljs-keyword">const</span> TitleBox = styled.h1<span class="hljs-string">`
+  background: <span class="hljs-subst">${colors.wine}</span>;
+	color: white;
+	padding-left: <span class="hljs-subst">${spaces[<span class="hljs-number">1</span>]}</span>px;
+	max-width: <span class="hljs-subst">${maxWidth}</span>;
+
+	// getting dynamic props from the component
+	<span class="hljs-subst">${props =&gt; props.borderSize &amp;&amp; <span class="hljs-string">`border: <span class="hljs-subst">${props.borderSize}</span>px solid black;`</span>}</span>
+`</span>
+  
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponent</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+  	<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TitleBox</span>&gt;</span>Welcome to my component<span class="hljs-tag">&lt;/<span class="hljs-name">TitleBox</span>&gt;</span></span>
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TitleBox</span> <span class="hljs-attr">borderSize</span>=<span class="hljs-string">{2}</span>&gt;</span>This title has a 2px border size<span class="hljs-tag">&lt;/<span class="hljs-name">TitleBox</span>&gt;</span></span>
+  )
+}
+</code></pre>
+<h2>Mixins</h2>
+<p>styled-components emplea una filosofía muy similar a los mixins en SASS y como hemos visto en el ejemplo, podemos hacer uso de la función <code>css</code> para generar el conjunto de reglas que queramos compartir</p>
+<pre><code class="language-jsx"><span class="hljs-keyword">import</span> {css} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;styled-components&#x27;</span>
+
+<span class="hljs-comment">// similar to SASS @mixin primary {...}</span>
+
+<span class="hljs-keyword">const</span> primary = css`<span class="css">
+  <span class="hljs-selector-tag">background</span>: </span><span class="hljs-subst">${colorPrimary}</span><span class="css">;
+  <span class="hljs-selector-tag">color</span>: <span class="hljs-selector-tag">white</span>;
+`</span>
+</code></pre>
+<h2>Temas</h2>
+<p>El uso de los temas nos permite crear variantes de estilo de manera sencilla, ya que nos dan acceso a propiedades particulares que se emplean globalmente dentro de nuestro diseño como por ejemplo colores, tipografías, tamaños, espacios, tipos de sombras ... <a href="https://bulma.io/documentation/customize/variables/">y cualquier cosa que creamos que se puede reutilizar</a></p>
+<p>styled-components hace uso de <code> React.context</code> y podemos definir un tema personalizado usando el componente <code>ThemeProvider</code> que provee de una propiedad <code>theme</code> donde podemos pasarle una configuración personalizada</p>
+<pre><code class="language-jsx"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>
+<span class="hljs-keyword">import</span> styled, {ThemeProvider} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;styled-components&#x27;</span>
+
+<span class="hljs-keyword">const</span> Button = styled.button<span class="hljs-string">`
+  background: <span class="hljs-subst">${props =&gt; props.theme.color}</span>;
+  color: white
+`</span>;
+
+<span class="hljs-keyword">const</span> customTheme = {
+  <span class="hljs-attr">color</span>: <span class="hljs-string">&#x27;red&#x27;</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponent</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeProvider</span> <span class="hljs-attr">theme</span>=<span class="hljs-string">{customTheme}</span>&gt;</span>
+      {/* the theme will drill through the whole components hierarchy */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">MyButtonList</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeProvider</span>&gt;</span></span>
+  )
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyButtonList</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span>&gt;</span>first button<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span>&gt;</span>second button<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+      ...
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  )
+}
+</code></pre>
+</section></main><script type="application/javascript" src="/assets/nav.js" async></script></body></html>

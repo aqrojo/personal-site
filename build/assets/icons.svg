@@ -1,4 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+<svg xmlns="http://www.w3.org/2000/svg">
+    <symbol id="menu-icon">
+        <g transform="translate(-1167 -43)">
+            <rect width="28" height="4" rx="2" transform="translate(1167 43)"/>
+            <rect  width="28" height="4" rx="2" transform="translate(1167 52)"/>
+            <rect  width="28" height="4" rx="2" transform="translate(1167 61)"/>
+        </g>
+    </symbol>
+    <symbol id="lang-icon">
+        <g transform="translate(0 40.359)">
+            <path d="M3.156-9.679A20.072,20.072,0,0,1,.208-20.18a20.189,20.189,0,0,1,20.179-20.18,20.189,20.189,0,0,1,20.18,20.18A20.189,20.189,0,0,1,20.388,0,20.077,20.077,0,0,1,9.309-3.314L0-.211Z"/>
+        </g>
+    </symbol>
     <symbol id="git-icon">
         <g transform="translate(-897.906 -2135)">
             <circle id="Elipse_9" cx="18" cy="18" r="18" transform="translate(897.906 2135)" fill="#fff"/>
@@ -17,4 +29,5 @@
                   transform="translate(898.333 2234.684)"/>
         </g>
     </symbol>
+
 </svg>
