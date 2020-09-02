@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; }
+  min-height: 100vh; }
 
 .content-wrapper {
   padding-top: 5rem;
@@ -180,7 +180,6 @@
 
 .md-wrapper {
   font-size: 18px;
-  line-height: 1.7em;
   /*
     abbr, acronym, blockquote, code, dir, kbd, listing, plaintext, q, samp, tt, var, xmp {
       hyphens: none;
@@ -386,7 +385,8 @@
     padding: 1em;
     border-radius: 10px; }
   .md-wrapper p {
-    color: #E5EBF8; }
+    color: #E5EBF8;
+    line-height: 1.7em; }
   .md-wrapper em {
     color: #fff; }
   .md-wrapper a, .md-wrapper strong {
