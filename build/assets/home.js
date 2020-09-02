@@ -25,7 +25,7 @@ function goToContact() {
 
 // --------------------------------
 // projects view
-const mySwiper = new Swiper('.swiper-container', {
+/*const mySwiper = new Swiper('.swiper-container', {
   effect: 'coverflow',
   grabCursor: true,
   centeredSlides: true,
@@ -44,4 +44,4 @@ const mySwiper = new Swiper('.swiper-container', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
-});
+});*/
