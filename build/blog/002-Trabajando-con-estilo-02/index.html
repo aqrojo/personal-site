@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link rel="stylesheet" href="/assets/main.css"><link rel="stylesheet" href="/assets/hljs__solarized-dark.css"><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;1,500&amp;family=Zilla+Slab:wght@300;600;700&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><!--script(src="/assets/prism.js" async)--><style>code[class*="language-"],
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link rel="stylesheet" href="/assets/main.css"><link rel="stylesheet" href="/assets/hljs__solarized-dark.css"><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;1,500&amp;family=Zilla+Slab:wght@300;600;700&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><style>code[class*="language-"],
 pre[class*="language-"] {
     word-wrap: normal !important;
 }
@@ -145,17 +145,17 @@ pre[class*="language-"] {
 
 <span class="hljs-keyword">const</span> TitleBox = styled.h1<span class="hljs-string">`
   background: <span class="hljs-subst">${colors.wine}</span>;
-	color: white;
-	padding-left: <span class="hljs-subst">${spaces[<span class="hljs-number">1</span>]}</span>px;
-	max-width: <span class="hljs-subst">${maxWidth}</span>;
+  color: white;
+  padding-left: <span class="hljs-subst">${spaces[<span class="hljs-number">1</span>]}</span>px;
+  max-width: <span class="hljs-subst">${maxWidth}</span>;
 
-	// getting dynamic props from the component
-	<span class="hljs-subst">${props =&gt; props.borderSize &amp;&amp; <span class="hljs-string">`border: <span class="hljs-subst">${props.borderSize}</span>px solid black;`</span>}</span>
+  // getting dynamic props from the component
+  <span class="hljs-subst">${props =&gt; props.borderSize &amp;&amp; <span class="hljs-string">`border: <span class="hljs-subst">${props.borderSize}</span>px solid black;`</span>}</span>;
 `</span>
   
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyComponent</span> (<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> (
-  	<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TitleBox</span>&gt;</span>Welcome to my component<span class="hljs-tag">&lt;/<span class="hljs-name">TitleBox</span>&gt;</span></span>
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TitleBox</span>&gt;</span>Welcome to my component<span class="hljs-tag">&lt;/<span class="hljs-name">TitleBox</span>&gt;</span></span>
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TitleBox</span> <span class="hljs-attr">borderSize</span>=<span class="hljs-string">{2}</span>&gt;</span>This title has a 2px border size<span class="hljs-tag">&lt;/<span class="hljs-name">TitleBox</span>&gt;</span></span>
   )
 }
