@@ -184,6 +184,12 @@
     background: #13171a;
     padding: 1em;
     border-radius: 10px; }
+  .md-wrapper pre {
+    overflow-x: auto;
+    padding: 1em; }
+  .md-wrapper pre code {
+    display: block;
+    width: max-content; }
   .md-wrapper p, .md-wrapper li, .md-wrapper a, .md-wrapper span {
     line-height: 1.7em; }
   .md-wrapper p {
@@ -203,6 +209,8 @@
     --margin-size: 1em;
     margin-top: var(--margin-size);
     margin-bottom: var(--margin-size); }
+  .md-wrapper img {
+    max-width: 100%; }
   .md-wrapper li::before {
     position: absolute;
     content: "\2022";
