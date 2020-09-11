@@ -179,6 +179,16 @@
 
 .md-wrapper {
   font-size: 18px; }
+  .md-wrapper h1 {
+    color: #92F2EE; }
+  .md-wrapper figure {
+    margin: 1em 0; }
+  .md-wrapper figcaption {
+    font-size: .8em;
+    margin: .4em 0;
+    color: #849BB8; }
+    .md-wrapper figcaption a {
+      color: #849BB8; }
   .md-wrapper pre {
     white-space: pre-wrap;
     background: #13171a;
